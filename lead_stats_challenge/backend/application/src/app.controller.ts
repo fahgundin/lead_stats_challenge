@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Param, Patch } from '@nestjs/common';
 import { AppService } from './app.service';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import 'dotenv/config';
@@ -96,5 +96,17 @@ export class AppController {
     } 
     
     return countPerPriority ;
+  }
+  @Delete('deleteTask/:id')
+  async deleteTask(@Param('id') id: number) {
+    
+    await db.delete(tasksTable).where(eq(tasksTable.id, id))
+
+  }
+  @Patch('updateTaskStatus/:id')
+  async updateTaskStatus(@Param('id') id :number, @Body() body: any): Promise<any>{
+    await db.update(tasksTable).set({
+      status: body.status
+    }).where(eq(tasksTable.id, id))
   }
 }

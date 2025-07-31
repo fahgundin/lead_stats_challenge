@@ -65,25 +65,36 @@ const filteredTasks = computed(() => {
   })
 
 
-  //   async function updateStatus(taskId: number, newStatus: string) {
-  //   try {
-  //     await fetch(`http://localhost:3000/api/tasks/${taskId}`, {
-  //       method: 'PATCH',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ status: newStatus }),
-  //     })
-
-  //     console.log(`Status da tarefa ${taskId} atualizado para ${newStatus}`)
-  //     // opcional: refetch ou mostrar toast
-  //   } catch (error) {
-  //     console.error('Erro ao atualizar status:', error)
-  //   }
-  // }
-  // function handleDelete(id: number) {
-  //     const deleteUrl = `http://localhost:3000/api/deleteTask?id=${id}`
-  // } 
+    async function updateStatus(taskId: number, newStatus: string) {
+    try {
+      await fetch(`http://localhost:3000/api/updateTaskStatus/${taskId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      })
+      location.reload();
+      
+    } catch (error) {
+      console.error( error)
+    }
+  }
+  function handleDelete(id: number) {
+      const deleteUrl = `http://localhost:3000/api/deleteTask/${id}`
+        try {
+          fetch(deleteUrl, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          
+          })
+          location.reload();
+        }catch(error){
+          console.log(error)
+        }
+  } 
 
 </script>
 
@@ -130,6 +141,7 @@ const filteredTasks = computed(() => {
       <thead>
         <tr>
           <th>Task</th>
+          <th>Description</th>
           <th>Assignet TO</th>
           <th>Priority</th>
           <th>Status</th>
@@ -141,12 +153,12 @@ const filteredTasks = computed(() => {
       <tbody>
         <tr v-for="task in filteredTasks" :key="task.id">
           <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
           <td>{{ task.assignedTo }}</td>
           <td>{{ task.priority }}</td>
-          <!-- <td>{{ task.status }}</td> -->
-          <!-- <select v-model="task.status" @change="updateStatus(task.id, task.status)"> -->
+          
           <td>
-            <select v-model="task.status">
+            <select v-model="task.status" @change="updateStatus(task.id, task.status)">
                 <option value="TODO">TODO</option>
                 <option value="IN_PROGRESS">IN_PROGRESS</option>
                 <option value="DONE">DONE</option>
@@ -156,8 +168,8 @@ const filteredTasks = computed(() => {
           <td>{{ task.dueDate.split("T")[0] }}</td>
           <td>{{ task.tags.join(', ') }}</td>
           <td>
-            <!-- <button @click="handleDelete(task.id)">Delete</button> -->
-             <button >Delete</button>
+            <button @click="handleDelete(task.id)">Delete</button>
+             <!-- <button >Delete</button> -->
           </td>
         </tr>
         <tr v-if="filteredTasks.length === 0">

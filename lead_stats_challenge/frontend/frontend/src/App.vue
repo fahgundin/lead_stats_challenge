@@ -2,6 +2,8 @@
 import HelloWorld from './components/HelloWorld.vue'
 import TasktimelineChart from './components/TasktimelineChart.vue'
 import TaskTable from './components/TaskTable.vue'
+import CreateTaskForm from './components/CreateTaskForm.vue'
+
 </script>
 
 <template>
@@ -9,6 +11,7 @@ import TaskTable from './components/TaskTable.vue'
   <HelloWorld />
   <TasktimelineChart />
   <TaskTable />
+  <CreateTaskForm />
 </template>
 
 <style scoped>
