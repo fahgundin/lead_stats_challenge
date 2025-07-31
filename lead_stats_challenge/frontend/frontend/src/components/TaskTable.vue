@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-import { useQuery, useMutation } from "@tanstack/vue-query";
+import { useQuery, } from "@tanstack/vue-query";
 import axios from 'axios'
 
 
@@ -31,11 +31,6 @@ function returnQuery() {
 
 // Dados simulados
 const tasks = returnQuery()
-
-function formatDate(iso: string): string {
-  const date = new Date(iso)
-  return date.toLocaleDateString('en-US') // exemplo: 30/07/2025
-}
 
 
 const selectedPriority = ref('')

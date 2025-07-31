@@ -4,7 +4,7 @@
 
   import { useQuery } from '@tanstack/vue-query'
   import axios from 'axios'
-  import { ref, computed } from 'vue'
+  import {  computed } from 'vue'
 
   const fetchTasks = async () => {
   const { data } = await axios.get('http://localhost:3000/api/getTasksPriorityNumber')
@@ -66,7 +66,7 @@
   border-left-width: 6px;
   border-radius: 12px;
   padding: 1rem;
-  flex: 1 1 180px; /* Responsivo */
+  flex: 1 1 180px;
   max-width: 220px;
   min-width: 150px;
   background-color: white;
